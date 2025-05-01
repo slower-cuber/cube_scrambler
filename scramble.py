@@ -1,10 +1,30 @@
 from twophase import solver
-from twophase.cubie import CubieCube
+from twophase.cubie import CubieCube, basicMoveCube
+
+
+def apply_moves(cube: CubieCube, moves: str):
+    d2i = {'U': 0, 'R': 1, 'F': 2, 'D': 3, 'L': 4, 'B': 5}
+    for m in [_m.strip() for _m in moves.split(' ')]:
+        direction = m[0]
+        mag = 1
+        if len(m) == 2:
+            if m[1] == '2':
+                mag = 2
+            elif m[1] == '3' or m[1] == "'":
+                mag = 3
+        for i in range(mag):
+            cube.multiply(basicMoveCube[d2i[direction]])
 
 
 def get_random_state_cube() -> CubieCube:
     cube = CubieCube()
-    cube.randomize()
+    apply_moves(cube, "U R2 B2 L2 D' B2 R2 F2 U' R' F D' R2 U' B' D' L F D2 U2 U")
+    #cube.randomize()
+    #cube.set_twist(451)
+    #cube.multiply(basicMoveCube[0]) #URFDLB
+    print(cube.get_twist())
+    print(cube.get_flip())
+    print(cube.get_corners())
     return cube
 
 
@@ -33,11 +53,13 @@ def gen_scramble():
     # rather than applying a bunch of random "moves"
     random_cube = get_random_state_cube()
 
-    cube_solution_str = solver.solve(random_cube.to_facelet_cube().to_string())
+    cube_solution_str = solver.solve(
+        random_cube.to_facelet_cube().to_string()
+    )
 
     scramble = inverse_solution(cube_solution_str)
 
-    print(scramble)
+    print(f"\nSC: {scramble}\n")
     print(random_cube.to_facelet_cube().to_2dstring())
     # print(cube_solution_str)
 
