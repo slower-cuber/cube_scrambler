@@ -18,13 +18,14 @@ def apply_moves(cube: CubieCube, moves: str):
 
 def get_random_state_cube() -> CubieCube:
     cube = CubieCube()
-    apply_moves(cube, "U R2 B2 L2 D' B2 R2 F2 U' R' F D' R2 U' B' D' L F D2 U2 U")
-    #cube.randomize()
-    #cube.set_twist(451)
-    #cube.multiply(basicMoveCube[0]) #URFDLB
-    print(cube.get_twist())
-    print(cube.get_flip())
-    print(cube.get_corners())
+    cube.randomize()
+    # Just some tests
+    # apply_moves(cube, "U R2 B2 L2 D' B2 R2 F2 U' R' F D' R2 U' B' D' L F D2 U2 U")
+    # cube.set_twist(451)
+    # cube.multiply(basicMoveCube[0]) #URFDLB
+    # print(cube.get_twist())
+    # print(cube.get_flip())
+    # print(cube.get_corners())
     return cube
 
 
